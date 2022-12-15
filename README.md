@@ -1,11 +1,11 @@
-# NMD project
-name:
-Developers:
-Tags:
+# Project Well.Done
+Name: Well.Done
+
+[git](https://github.com/lesbianboy/well.done)
+
+tags: #task-managment #planner
 
 Description:
-Fast and Easy Task Management App
-Sitemap:
 - Navigation
     - Home Screen
     - Registration
@@ -24,14 +24,13 @@ Sitemap:
             - Log Out
 
 stack:
-programming language: dart
+programming language: dart flutter
 database: mongodb | firebase
 
 ## File Structure
 feature-first
-file structure:
--
+
 
 ## Design
-
+[figma]()
 
