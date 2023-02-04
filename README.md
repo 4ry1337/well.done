@@ -1,4 +1,4 @@
-# Project Well.Done
+# Well.Done - Task Management App
 Name: Well.Done
 
 [git](https://github.com/lesbianboy/well.done)
