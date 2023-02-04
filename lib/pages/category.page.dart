@@ -139,7 +139,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                 }
                             );
                           },
-                          icon: const Icon(Iconsax.trash)
+                          icon: Icon(Iconsax.trash)
                       ),
                       const IconButton(onPressed: null, icon: Icon(null)),
                       IconButton(
