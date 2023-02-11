@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:welldone/core/theme/theme.dart';
 import 'package:welldone/pages/categories.page.dart';
-import 'package:welldone/pages/profile.page.dart';
+import 'package:welldone/pages/setting.page.dart';
 import 'package:welldone/pages/task.page.dart';
 import 'package:welldone/pages/taskCE.page.dart';
 
@@ -11,31 +11,44 @@ class MainPage extends StatefulWidget{
   const MainPage({Key? key}) : super(key: key);
 
   @override
-  _MainPageState createState() => _MainPageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
-  final List<Widget> pages = [
-    const CategoriesPage(),
-    const TaskPage(),
-    const ProfilePage(),
-  ];
+class _MainPageState extends State<MainPage>{
   final PageStorageBucket bucket = PageStorageBucket();
-  Widget currentPage = const TaskPage();
-  bool _showFAB = true;
+  late List<Widget> pages;
+  late int currentPageIndex;
+  late bool _showFAB;
+  @override
+  void initState() {
+    pages = [
+      const CategoriesPage(key: PageStorageKey(1)),
+      const TaskPage(key: PageStorageKey(2)),
+      const SettingPage(key: PageStorageKey(3)),
+    ];
+    _showFAB = true;
+    currentPageIndex = 1;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
           child: PageStorage(
             bucket: bucket,
-            child: currentPage,
+            child: pages[currentPageIndex],
           ),
         ),
         extendBody: true,
         floatingActionButton: _showFAB ? FloatingActionButton(
           onPressed:(){
-            Get.to(const TaskCEPage(edit: false));
+            Get.to(()=>
+                TaskCEPage(
+                  edit: false,
+                  set: (){},
+                )
+            );
           },
           shape: const CircleBorder(),
           child: Container(
@@ -44,7 +57,7 @@ class _MainPageState extends State<MainPage> {
                 gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: colors.gradient
+                    colors: AppColors.gradient
                 ),
                 boxShadow: designSystem.shadow,
               ),
@@ -72,29 +85,29 @@ class _MainPageState extends State<MainPage> {
                       IconButton(
                           onPressed: (){
                             setState(() {
-                              currentPage = const CategoriesPage();
                               _showFAB = false;
+                              currentPageIndex = 0;
                             });
                           },
-                          icon: const Icon(Iconsax.task)
+                          icon: Icon(Iconsax.task, color: currentPageIndex == 0 ? AppColors.accent : AppColors.primary, size: 28)
                       ),
                       !_showFAB ? IconButton(
                           onPressed: (){
                             setState(() {
-                              currentPage = const TaskPage();
                               _showFAB = true;
+                              currentPageIndex = 1;
                             });
                           },
-                          icon: const Icon(Iconsax.home,)
+                          icon: Icon(Iconsax.home, color: currentPageIndex == 1 ? AppColors.accent : AppColors.primary, size: 28)
                       ) : const IconButton(onPressed: null, icon: Icon(null)),
                       IconButton(
                           onPressed: (){
                             setState(() {
-                              currentPage = const ProfilePage();
                               _showFAB = false;
+                              currentPageIndex = 2;
                             });
                           },
-                          icon: const Icon(Iconsax.profile_circle)
+                          icon: Icon(Iconsax.profile_circle, color: currentPageIndex == 2 ? AppColors.accent : AppColors.primary, size: 28)
                       ),
                     ],
                   ),

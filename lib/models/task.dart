@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 
 import 'category.dart';
@@ -13,11 +12,12 @@ class Task {
   String description;
   bool important;
   bool done;
+
   final category = IsarLink<Category>();
 
   Task({
     this.id = Isar.autoIncrement,
-    this.date,
+    required this.date,
     required this.title,
     this.description = '',
     this.important = false,

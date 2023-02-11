@@ -5,5 +5,6 @@ part 'settings.g.dart';
 @collection
 class Settings {
   Id id = Isar.autoIncrement;
-  bool onboard = false;
+  int language = 0;
+  bool? theme;
 }

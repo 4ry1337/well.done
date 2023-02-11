@@ -4,7 +4,7 @@ export 'package:welldone/core/values/design_system.dart';
 
 final ThemeData lightTheme = ThemeData.light();
 
-class apptheme {
+class AppTheme {
   static ThemeData get baseTheme {
     return lightTheme.copyWith(
         useMaterial3: true,
@@ -12,17 +12,17 @@ class apptheme {
         appBarTheme: const AppBarTheme(),
         colorScheme: const ColorScheme(
             brightness: Brightness.light,
-            primary: colors.primary,
-            onPrimary: colors.white,
-            secondary: colors.secondary,
-            onSecondary: colors.white,
-            tertiary: colors.tertiary,
-            error: colors.error,
-            onError: colors.white,
-            background: colors.background,
-            onBackground: colors.black,
-            surface: colors.white,
-            onSurface: colors.black
+            primary: AppColors.primary,
+            onPrimary: AppColors.white,
+            secondary: AppColors.secondary,
+            onSecondary: AppColors.white,
+            tertiary: AppColors.tertiary,
+            error: AppColors.error,
+            onError: AppColors.white,
+            background: AppColors.background,
+            onBackground: AppColors.black,
+            surface: AppColors.white,
+            onSurface: AppColors.black
         ),
         // canvasColor: canvasColor,
         // cardColor: cardColor,
@@ -34,30 +34,30 @@ class apptheme {
         // hintColor: hintColor,
         // hoverColor: hoverColor,
         // indicatorColor: indicatorColor,
-        primaryColor: colors.primary,
-        // scaffoldBackgroundColor: scaffoldBackgroundColor,
+        primaryColor: AppColors.primary,
+        scaffoldBackgroundColor: AppColors.white,
         // secondaryHeaderColor: secondaryHeaderColor,
-        // shadowColor: shadowColor,
-        splashColor: colors.accent,
+        shadowColor: designSystem.shadow.first.color,
+        splashColor: AppColors.accent,
         // unselectedWidgetColor: unselectedWidgetColor,
         textTheme: const TextTheme(
-            headline1: typography.headline1,
-            headline2: typography.headline2,
-            headline3: typography.headline3,
-            headline4: typography.headline4,
-            headline5: typography.headline5,
-            headline6: typography.headline6,
-            subtitle1: typography.subtitle1,
-            subtitle2: typography.subtitle2,
-            bodyText1: typography.bodyText1,
-            bodyText2: typography.bodyText2,
-            button: typography.button,
-            caption: typography.caption,
-            overline: typography.overline
+            headline1: AppTypography.headline1,
+            headline2: AppTypography.headline2,
+            headline3: AppTypography.headline3,
+            headline4: AppTypography.headline4,
+            headline5: AppTypography.headline5,
+            headline6: AppTypography.headline6,
+            subtitle1: AppTypography.subtitle1,
+            subtitle2: AppTypography.subtitle2,
+            bodyText1: AppTypography.bodyText1,
+            bodyText2: AppTypography.bodyText2,
+            button: AppTypography.button,
+            caption: AppTypography.caption,
+            overline: AppTypography.overline
         ).apply(
-          bodyColor: colors.primary,
-          displayColor: colors.primary
-        )
+          bodyColor: AppColors.primary,
+          displayColor: AppColors.primary
+        ),
     );
   }
 }

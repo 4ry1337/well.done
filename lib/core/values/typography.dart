@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class typography {
+class AppTypography {
   static const headline1 = TextStyle(
       fontSize: 93,
       fontWeight: FontWeight.w300,
@@ -50,17 +50,17 @@ class typography {
       letterSpacing: 0.25
   );
   static const button = TextStyle(
-      fontSize: 18,
+      fontSize: 22,
       fontWeight: FontWeight.w500,
       letterSpacing: 1.25
   );
   static const caption = TextStyle(
-      fontSize: 12,
+      fontSize: 16,
       fontWeight: FontWeight.w400,
       letterSpacing: 0.4
   );
   static const overline = TextStyle(
-      fontSize: 10,
+      fontSize: 14,
       fontWeight: FontWeight.w400,
       letterSpacing: 1.5
   );

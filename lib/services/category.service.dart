@@ -11,11 +11,15 @@ class CategoryService {
   final timeEdit = TextEditingController().obs;
   final toggle = 0.obs;
 
+  Future<Category?> getCategory(int id) async {
+    return await isar.categorys.get(id);
+  }
+
   Stream<List<Category>> getCategories() async* {
     yield* isar.categorys.where().watch(fireImmediately: true);
   }
 
-  Future<void> addCategory(TextEditingController titleEdit, IconData icon, Color selectedColor) async {
+  Future<void> addCategory(TextEditingController titleEdit, IconData icon, Color selectedColor, Function() set) async {
     final categoryCreate = Category(
       title: titleEdit.text,
       icon: icon.codePoint,
@@ -29,25 +33,24 @@ class CategoryService {
       await isar.writeTxn(() async {
         await isar.categorys.put(categoryCreate);
       });
-      EasyLoading.showSuccess('createCategory'.tr,
-          duration: const Duration(milliseconds: 500));
+      EasyLoading.showSuccess('createCategory'.tr);
     } else {
-      EasyLoading.showError('duplicateCategory'.tr,
-          duration: const Duration(milliseconds: 500));
+      EasyLoading.showError('duplicateCategory'.tr);
     }
 
     titleEdit.clear();
+    set();
   }
 
-  Future<void> updateCategory(Category category, TextEditingController titleEdit, IconData icon, Color selectedColor) async {
+  Future<void> updateCategory(Category category, TextEditingController titleEdit, IconData icon, Color selectedColor, Function() set) async {
     await isar.writeTxn(() async {
       category.title = titleEdit.text;
       category.icon = icon.codePoint;
       category.color = selectedColor.value;
       await isar.categorys.put(category);
     });
-    EasyLoading.showSuccess('editCategory'.tr,
-        duration: const Duration(milliseconds: 500));
+    EasyLoading.showSuccess('editCategory'.tr);
+    set();
   }
 
   Future<void> deleteCategory(Category category, Function() set) async {
@@ -72,8 +75,7 @@ class CategoryService {
     await isar.writeTxn(() async {
       await isar.categorys.delete(category.id);
     });
-    EasyLoading.showSuccess('categoryDelete'.tr,
-        duration: const Duration(milliseconds: 500));
+    EasyLoading.showSuccess('categoryDelete'.tr);
     set();
   }
 }

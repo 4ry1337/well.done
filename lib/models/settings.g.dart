@@ -17,9 +17,14 @@ const SettingsSchema = CollectionSchema(
   name: r'Settings',
   id: -8656046621518759136,
   properties: {
-    r'onboard': PropertySchema(
+    r'language': PropertySchema(
       id: 0,
-      name: r'onboard',
+      name: r'language',
+      type: IsarType.long,
+    ),
+    r'theme': PropertySchema(
+      id: 1,
+      name: r'theme',
       type: IsarType.bool,
     )
   },
@@ -52,7 +57,8 @@ void _settingsSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeBool(offsets[0], object.onboard);
+  writer.writeLong(offsets[0], object.language);
+  writer.writeBool(offsets[1], object.theme);
 }
 
 Settings _settingsDeserialize(
@@ -63,7 +69,8 @@ Settings _settingsDeserialize(
 ) {
   final object = Settings();
   object.id = id;
-  object.onboard = reader.readBool(offsets[0]);
+  object.language = reader.readLong(offsets[0]);
+  object.theme = reader.readBoolOrNull(offsets[1]);
   return object;
 }
 
@@ -75,7 +82,9 @@ P _settingsDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readBool(offset)) as P;
+      return (reader.readLong(offset)) as P;
+    case 1:
+      return (reader.readBoolOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -222,11 +231,80 @@ extension SettingsQueryFilter
     });
   }
 
-  QueryBuilder<Settings, Settings, QAfterFilterCondition> onboardEqualTo(
-      bool value) {
+  QueryBuilder<Settings, Settings, QAfterFilterCondition> languageEqualTo(
+      int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'onboard',
+        property: r'language',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QAfterFilterCondition> languageGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'language',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QAfterFilterCondition> languageLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'language',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QAfterFilterCondition> languageBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'language',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QAfterFilterCondition> themeIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'theme',
+      ));
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QAfterFilterCondition> themeIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'theme',
+      ));
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QAfterFilterCondition> themeEqualTo(
+      bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'theme',
         value: value,
       ));
     });
@@ -240,15 +318,27 @@ extension SettingsQueryLinks
     on QueryBuilder<Settings, Settings, QFilterCondition> {}
 
 extension SettingsQuerySortBy on QueryBuilder<Settings, Settings, QSortBy> {
-  QueryBuilder<Settings, Settings, QAfterSortBy> sortByOnboard() {
+  QueryBuilder<Settings, Settings, QAfterSortBy> sortByLanguage() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'onboard', Sort.asc);
+      return query.addSortBy(r'language', Sort.asc);
     });
   }
 
-  QueryBuilder<Settings, Settings, QAfterSortBy> sortByOnboardDesc() {
+  QueryBuilder<Settings, Settings, QAfterSortBy> sortByLanguageDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'onboard', Sort.desc);
+      return query.addSortBy(r'language', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QAfterSortBy> sortByTheme() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'theme', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QAfterSortBy> sortByThemeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'theme', Sort.desc);
     });
   }
 }
@@ -267,24 +357,42 @@ extension SettingsQuerySortThenBy
     });
   }
 
-  QueryBuilder<Settings, Settings, QAfterSortBy> thenByOnboard() {
+  QueryBuilder<Settings, Settings, QAfterSortBy> thenByLanguage() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'onboard', Sort.asc);
+      return query.addSortBy(r'language', Sort.asc);
     });
   }
 
-  QueryBuilder<Settings, Settings, QAfterSortBy> thenByOnboardDesc() {
+  QueryBuilder<Settings, Settings, QAfterSortBy> thenByLanguageDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'onboard', Sort.desc);
+      return query.addSortBy(r'language', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QAfterSortBy> thenByTheme() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'theme', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QAfterSortBy> thenByThemeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'theme', Sort.desc);
     });
   }
 }
 
 extension SettingsQueryWhereDistinct
     on QueryBuilder<Settings, Settings, QDistinct> {
-  QueryBuilder<Settings, Settings, QDistinct> distinctByOnboard() {
+  QueryBuilder<Settings, Settings, QDistinct> distinctByLanguage() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'onboard');
+      return query.addDistinctBy(r'language');
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QDistinct> distinctByTheme() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'theme');
     });
   }
 }
@@ -297,9 +405,15 @@ extension SettingsQueryProperty
     });
   }
 
-  QueryBuilder<Settings, bool, QQueryOperations> onboardProperty() {
+  QueryBuilder<Settings, int, QQueryOperations> languageProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'onboard');
+      return query.addPropertyName(r'language');
+    });
+  }
+
+  QueryBuilder<Settings, bool?, QQueryOperations> themeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'theme');
     });
   }
 }

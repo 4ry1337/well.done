@@ -4,10 +4,9 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:welldone/main.dart';
 
 class NotificationShow {
-  Future showNotification(
-      int id, String title, String body, DateTime? date) async {
+  Future showNotification(int id, String title, String body, DateTime? date) async {
     AndroidNotificationDetails androidNotificationDetails =
-    const AndroidNotificationDetails(
+        const AndroidNotificationDetails(
       'Well.Done',
       'Tasks',
       priority: Priority.max,
@@ -22,7 +21,7 @@ class NotificationShow {
       scheduledTime,
       notificationDetails,
       uiLocalNotificationDateInterpretation:
-      UILocalNotificationDateInterpretation.absoluteTime,
+          UILocalNotificationDateInterpretation.absoluteTime,
       androidAllowWhileIdle: true,
       payload: 'notlification-payload',
     );

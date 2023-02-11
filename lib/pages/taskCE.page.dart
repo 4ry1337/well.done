@@ -1,46 +1,53 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:isar/isar.dart';
+import 'package:welldone/core/utils/utils.dart';
 import 'package:welldone/main.dart';
 import 'package:welldone/core/theme/theme.dart';
 import 'package:welldone/models/category.dart';
 import 'package:welldone/models/task.dart';
-import 'package:welldone/services/category.service.dart';
+import 'package:welldone/pages/widgets/button.widget.dart';
+import 'package:welldone/pages/widgets/categoryList.widget.dart';
 import 'package:welldone/services/task.service.dart';
 
 class TaskCEPage extends StatefulWidget {
   const TaskCEPage({
     super.key,
     required this.edit,
+    required this.set,
     this.category,
     this.task,
   });
-  final Category? category;
   final Task? task;
   final bool edit;
-  //final Function() set;
+  final Function() set;
+  final Category? category;
 
   @override
   State<TaskCEPage> createState() => _TaskCEPageState();
 }
 
 class _TaskCEPageState extends State<TaskCEPage> {
-  final formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final taskService = TaskService();
-  final categoryService = CategoryService();
   final locale = Get.locale;
+  DateTime? initialDate;
+  Task? selectedTask;
   Category? selectedCategory;
-  List<Category>? category;
-  final textConroller = TextEditingController();
 
   @override
   initState() {
     if (widget.edit == true) {
-      selectedCategory = widget.task!.category.value;
-      textConroller.text = widget.task!.category.value!.title;
+      selectedTask = widget.task;
+      selectedCategory = widget.task?.category.value;
       taskService.titleEdit.value = TextEditingController(text: widget.task!.title);
-      taskService.descEdit.value = TextEditingController(text: widget.task!.description);
+      taskService.descEdit.value = TextEditingController(text: widget.task?.description);
       taskService.timeEdit.value = TextEditingController(text: widget.task!.date != null ? widget.task!.date.toString() : '');
+    }
+    initialDate = widget.task?.date != null ? widget.task!.date : DateTime.now();
+    if(widget.category != null){
+      selectedCategory = widget.category;
     }
     super.initState();
   }
@@ -61,7 +68,7 @@ class _TaskCEPageState extends State<TaskCEPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text('newTask'.tr),
+        title: Text('task'.tr),
         toolbarHeight: 72,
         centerTitle: true,
         shape: const RoundedRectangleBorder(
@@ -78,31 +85,129 @@ class _TaskCEPageState extends State<TaskCEPage> {
           )
         ],
       ),
+      extendBody: true,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: Form(
-          key: formKey,
-          child: SingleChildScrollView(
+        child: Builder(
+          builder: (context) => Form(
+            key: _formKey,
             child: Padding(
-              padding: designSystem.padding[18]!,
+              padding: const EdgeInsets.symmetric(horizontal: 18),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                          'taskTitle'.tr,
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'title'.tr,
                           style: Theme.of(context).textTheme.subtitle2,
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                          border: const UnderlineInputBorder(),
-                          hintText: 'hintText'.tr,
-                          hintStyle: Theme.of(context).textTheme.bodyText1,
                         ),
-                      ),
-                    ],
+                        TextFormField(
+                          controller: taskService.titleEdit.value,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            border: const UnderlineInputBorder(),
+                            hintText: 'hintTaskTitle'.tr,
+                            hintStyle: Theme.of(context).textTheme.bodyText1,
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'validateTitle'.tr;
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ]
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'description'.tr,
+                          style: Theme.of(context).textTheme.subtitle2,
+                        ),
+                        TextFormField(
+                          controller: taskService.descEdit.value,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            border: const UnderlineInputBorder(),
+                            hintText: 'hintTaskDescription'.tr,
+                            hintStyle: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'category'.tr,
+                            style: Theme.of(context).textTheme.subtitle2,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: CategoryList(
+                              set: (){},
+                              initialCategory: widget.category,
+                              onSelected: (selected){
+                                selectedCategory = selected;
+                              },
+                              foregroundColor: AppColors.primary,),
+                          ),
+                        ],
+                      )
+                  ),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: CupertinoDatePicker(
+                            initialDateTime: initialDate,
+                            mode: CupertinoDatePickerMode.dateAndTime,
+                            onDateTimeChanged: (DateTime selected){
+                              taskService.timeEdit.value.text = selected.toString();
+                            },
+                        )
+                    ),
+                  ),
+                  Container(
+                    height: 100,
+                    padding: const EdgeInsets.symmetric(vertical: 18),
+                    child: Button(
+                      onPressed: (){
+                        if (_formKey.currentState!.validate()) {
+                          textTrim(taskService.titleEdit.value);
+                          textTrim(taskService.descEdit.value);
+                          widget.edit == false ? taskService.addTask(
+                            selectedCategory,
+                            taskService.titleEdit.value,
+                            taskService.descEdit.value,
+                            taskService.timeEdit.value,
+                            widget.set,
+                          ) : taskService.updateTask(
+                            selectedTask!,
+                            selectedCategory,
+                            taskService.titleEdit.value,
+                            taskService.descEdit.value,
+                            taskService.timeEdit.value,
+                            widget.set,
+                          );
+                          Get.back();
+                        }
+                      },
+                      buttonName: widget.edit == false ? "create".tr.toUpperCase() : "edit".tr.toUpperCase(),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

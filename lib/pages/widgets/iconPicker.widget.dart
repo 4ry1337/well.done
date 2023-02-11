@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:welldone/core/theme/theme.dart';
 
 class IconPicker extends StatefulWidget {
@@ -52,7 +51,7 @@ class _IconPickerState extends State<IconPicker> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: designSystem.borderRadius[16]!,
-                border: _pickedIcon == icon ? Border.all(color: colors.primary, width: 3, style: BorderStyle.solid) : null,
+                border: _pickedIcon == icon ? Border.all(color: AppColors.primary, width: 3, style: BorderStyle.solid) : null,
               ),
               child: Center(
                 child: Icon(icon),

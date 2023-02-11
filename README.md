@@ -1,9 +1,8 @@
-# Well.Done - Task Management App
-Name: Well.Done
+Title: Well.Done
+tags: task management, planner
+Description: 
 
 [git](https://github.com/lesbianboy/well.done)
-
-tags: #task-managment #planner
 
 Description:
 - Navigation
@@ -13,24 +12,14 @@ Description:
             - Every Day Tasks
             - Schedule
             - Tasks for Today
-        - Analytics
-            - General Analytics
-            - Tasks List Analytics
-            - Add Goal
         - Settings
             - Notifications
-            - Security
-            - About
-            - Log Out
+            - Language
 
 stack:
-programming language: dart flutter
-database: mongodb | firebase
-
-## File Structure
-feature-first
-
+programming language: dart/flutter
+state management: [Getx](https://pub.dev/packages/get) 
+database: [isar](https://isar.dev/)
 
 ## Design
-[figma]()
-
+[figma](https://www.figma.com/file/wPa9c0E4MT46acEhsrsrX0/Untitled?node-id=0%3A563&t=vWTI5cvlfGOGH1DY-1)

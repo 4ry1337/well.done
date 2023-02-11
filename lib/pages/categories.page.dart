@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:welldone/core/theme/theme.dart';
-import 'package:welldone/pages/categoryCE.pager.dart';
-import 'package:welldone/pages/taskCE.page.dart';
-import 'package:welldone/pages/widgets/categoryList.widget.dart';
+import 'package:welldone/pages/categoryCE.page.dart';
+import 'package:welldone/pages/widgets/categoryGrid.widget.dart';
+import 'package:welldone/services/task.service.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({
@@ -15,6 +15,7 @@ class CategoriesPage extends StatefulWidget {
 }
 
 class _CategoriesPageState extends State<CategoriesPage> {
+  final taskService = TaskService();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,7 +29,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Category'.tr,
+                  'categories'.tr,
                   style: Theme.of(context).textTheme.headline4,
                 ),
                 IconButton(
@@ -39,11 +40,11 @@ class _CategoriesPageState extends State<CategoriesPage> {
                       ));
                     },
                     icon: const Icon(Iconsax.add)
-                )
+                ),
               ],
             ),
           ),
-          const CategoryList()
+          const CategoryGrid()
         ],
       ),
     );

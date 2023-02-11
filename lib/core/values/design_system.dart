@@ -11,6 +11,7 @@ mixin designSystem {
   };
   
   static const Map<int, BorderRadius> borderRadius = {
+    20: BorderRadius.all(Radius.circular(20)),
     16: BorderRadius.all(Radius.circular(16)),
     12: BorderRadius.all(Radius.circular(12)),
     8: BorderRadius.all(Radius.circular(8)),
