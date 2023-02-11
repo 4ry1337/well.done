@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 
 import 'package:welldone/core/theme/theme.dart';
 import 'package:welldone/core/utils/translation.dart';
+import 'package:welldone/main.dart';
 import 'package:welldone/models/language.model.dart';
 import 'package:welldone/services/settings.service.dart';
 
@@ -89,7 +90,7 @@ class _SettingPageState extends State<SettingPage> {
                                       ),
                                       const SizedBox(height: 8),
                                       Text(
-                                        language.languageName,
+                                        Translation.languages[settings.language].languageName,
                                         style: context.textTheme.bodyText1,
                                       ),
                                     ],

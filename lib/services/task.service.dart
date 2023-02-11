@@ -26,8 +26,7 @@ class TaskService {
         .count();
   }
 
-  Future<int> getCountTotalTaskCalendarByCategory(
-      DateTime selectedDay, Category category) async {
+  Future<int> getCountTotalTaskCalendarByCategory(DateTime selectedDay, Category category) async {
     return isar.tasks
         .filter()
         .category((q) => q.idEqualTo(category.id))
@@ -53,8 +52,7 @@ class TaskService {
         .count();
   }
 
-  Future<int> getCountDoneTaskCalendarByCategory(
-      DateTime selectedDay, Category category) async {
+  Future<int> getCountDoneTaskCalendarByCategory(DateTime selectedDay, Category category) async {
     return isar.tasks
         .filter()
         .doneEqualTo(true)

@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:get/get.dart';
 import 'package:isar/isar.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 //app
 import 'package:welldone/pages/main.page.dart';
@@ -36,16 +37,21 @@ void main() async {
   tz.setLocalLocation(tz.getLocation(timeZoneName));
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(systemNavigationBarColor: AppColors.black));
   await isarInit();
-  runApp(const App());
+  initializeDateFormatting().then((_) => runApp(App()));
   configLoading();
 }
 
 void configLoading() {
   EasyLoading.instance
-    ..indicatorType = EasyLoadingIndicatorType.threeBounce
-    ..radius = 10.0
-    ..dismissOnTap = false
-    ..animationStyle = EasyLoadingAnimationStyle.scale;
+    ..backgroundColor = AppColors.white
+    ..boxShadow = designSystem.shadow
+    ..animationStyle = EasyLoadingAnimationStyle.scale
+    ..contentPadding = designSystem.padding[8]!
+    ..radius = 10
+    ..indicatorColor = AppColors.primary
+    ..displayDuration = const Duration(milliseconds: 500)
+      ..dismissOnTap = false
+      ..userInteractions = false;
 }
 
 Future<void> isarInit() async {

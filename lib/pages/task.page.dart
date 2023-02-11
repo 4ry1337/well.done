@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:welldone/core/theme/theme.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:welldone/core/utils/translation.dart';
 import 'package:welldone/models/category.dart';
 import 'package:welldone/models/task.dart';
 import 'package:welldone/pages/widgets/categoryList.widget.dart';
 import 'package:welldone/pages/widgets/taskList.widget.dart';
+import 'package:welldone/services/settings.service.dart';
 import 'package:welldone/services/task.service.dart';
 
 class TaskPage extends StatefulWidget {
@@ -17,6 +19,7 @@ class TaskPage extends StatefulWidget {
 
 class _TaskPageState extends State<TaskPage> {
   final taskService = TaskService();
+  final localizationService = LocalizationService();
   final locale = Get.locale;
   DateTime selectedDay = DateTime.now();
   Category? selectedCategory;
@@ -71,6 +74,7 @@ class _TaskPageState extends State<TaskPage> {
                     });
                   }),
               TableCalendar(
+                locale: localizationService.locale.languageCode.toString(),
                 calendarBuilders: CalendarBuilders(
                     markerBuilder: (context, selectedDay, events) {
                   return StreamBuilder<List<Task>>(
@@ -98,7 +102,7 @@ class _TaskPageState extends State<TaskPage> {
                                       child: Center(
                                         child: Text(
                                           taskLength.toString(),
-                                          style: context.textTheme.bodyText1?.copyWith(color: AppColors.white),
+                                          style: context.textTheme.overline?.copyWith(color: AppColors.white),
                                         ),
                                       ),
                                     ) : Container();
