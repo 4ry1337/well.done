@@ -19,6 +19,7 @@ class LocalizationService{
   int get selectedIndex => _selectedIndex;
   final List<LanguageModel> _languages = [];
   List<LanguageModel> get languages => _languages;
+
   Future<void> updateLanguage(int l) async {
     try {
       _locale = Locale(Translation.languages[l].languageCode, Translation.languages[l].countryCode);

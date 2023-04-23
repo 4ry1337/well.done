@@ -42,7 +42,8 @@ class Translation extends Translations {
           'edit': 'Edit',
           'cancel': 'Cancel',
           'delete': 'Delete',
-          'error': 'Error'
+          'error': 'Error',
+          'languageChanged': 'Language changed'
         },
         'ru_RU': {
           'task': 'Задача',
@@ -78,7 +79,8 @@ class Translation extends Translations {
           'edit': 'Изменить',
           'cancel': 'Отмена',
           'delete': 'Удалить',
-          'error': 'Ошибка'
+          'error': 'Ошибка',
+          'languageChanged': 'Язык изменен'
         },
       };
 }
