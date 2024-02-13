@@ -7,7 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:get/get.dart';
 import 'package:isar/isar.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:flutter_native_timezone_updated_gradle/flutter_native_timezone.dart';
 //app
 import 'package:welldone/pages/main.page.dart';
 import 'package:welldone/services/settings.service.dart';
